@@ -1,0 +1,17 @@
+{
+  "name": "mark-o-travel-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "fast-xml-parser": "^5.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "typescript": "^5.7.0"
+  }
+}
