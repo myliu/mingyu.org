@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mingyu.org</title>
+    <title>mingyu.org - My Life Map</title>
     <style>
         * {
             margin: 0;
@@ -13,81 +13,326 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f0f1e;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow-x: hidden;
             color: white;
         }
         
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 600px;
+        /* Animated gradient background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
         }
         
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+        
+        /* Content container */
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        /* Main content card */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+            transition: transform 0.1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Title with gradient text */
         h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #a8edea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         
         .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+            font-weight: 600;
         }
         
         .description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            opacity: 0.85;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            opacity: 0.9;
             margin-bottom: 2rem;
         }
         
-        .status {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
+        /* Feature pills */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-pill {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.6rem 1.2rem;
             border-radius: 20px;
             font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        .feature-pill:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Status badge */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(74, 222, 128, 0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(74, 222, 128, 0.4);
             margin-top: 1rem;
         }
         
         .pulse {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: #4ade80;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 10px;
             animation: pulse 2s infinite;
+            box-shadow: 0 0 10px #4ade80;
         }
         
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
         }
         
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .subtitle { font-size: 1.2rem; }
+        /* Interactive globe icon */
+        .globe-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: rotate 20s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Links */
+        .links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .link-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.4rem; }
+            .description { font-size: 1rem; }
+            .card { padding: 2rem; }
+            .globe-icon { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Animated gradient background -->
+    <div class="gradient-bg"></div>
+    
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Main content -->
     <div class="container">
-        <h1>mingyu.org</h1>
-        <div class="subtitle">My Life Map</div>
-        <div class="description">
-            Building an AI-native application to visualize everywhere I've been—from photos, check-ins, and location history. 
-            Exploring MCP (Model Context Protocol) and modern AI development tools along the way.
-        </div>
-        <div class="status">
-            <span class="pulse"></span>
-            In Development
+        <div class="card">
+            <div class="globe-icon">🌍</div>
+            
+            <h1>mingyu.org</h1>
+            <div class="subtitle">My Life Map</div>
+            
+            <div class="description">
+                Building an AI-native application to visualize everywhere I've been—from photos, 
+                check-ins, and location history. Exploring the future of AI development with 
+                MCP (Model Context Protocol) and modern tooling.
+            </div>
+            
+            <div class="features">
+                <div class="feature-pill">📸 Photo EXIF Data</div>
+                <div class="feature-pill">📍 Swarm Check-ins</div>
+                <div class="feature-pill">🗺️ Google Maps History</div>
+                <div class="feature-pill">🤖 AI-Powered Insights</div>
+                <div class="feature-pill">🔗 MCP Integration</div>
+            </div>
+            
+            <div class="status">
+                <span class="pulse"></span>
+                Building in Public
+            </div>
+            
+            <div class="links">
+                <a href="https://github.com/myliu/mingyu.org" class="link-button" target="_blank">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/liumingyu/" class="link-button" target="_blank">
+                    <span>💼</span> LinkedIn
+                </a>
+                <a href="https://stackoverflow.com/users/1246262/mingyu" class="link-button" target="_blank">
+                    <span>📚</span> Stack Overflow
+                </a>
+                <a href="https://scholar.google.com/citations?user=jW7n4e0AAAAJ" class="link-button" target="_blank">
+                    <span>🎓</span> Google Scholar
+                </a>
+                <a href="https://modelcontextprotocol.io/" class="link-button" target="_blank">
+                    <span>📖</span> Learn MCP
+                </a>
+            </div>
         </div>
     </div>
+    
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size between 2px and 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random starting position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay and duration
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles when page loads
+        createParticles();
+        
+        // Add subtle mousemove effect to card
+        const card = document.querySelector('.card');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+        });
+    </script>
 </body>
 </html>
