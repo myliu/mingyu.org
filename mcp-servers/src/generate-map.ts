@@ -158,7 +158,7 @@ const statsTitle = document.createElement('span');
 statsTitle.style.fontWeight = 'bold';
 statsTitle.textContent = "Mark O'Travel";
 statsBar.appendChild(statsTitle);
-[4, 1, 5, 0].forEach(id => {
+[4, 1, 5].forEach(id => {
   if (!counts[id]) return;
   const stat = document.createElement('span');
   stat.className = 'stat';
