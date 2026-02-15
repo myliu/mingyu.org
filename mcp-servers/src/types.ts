@@ -1,17 +1,15 @@
 export enum StatusId {
   NotVisited = 0,
   Lived = 1,
-  Planned = 2,
-  Wishlist = 3,
   Visited = 4,
+  Transited = 5,
 }
 
 export const STATUS_LABELS: Record<number, string> = {
   [StatusId.NotVisited]: "Not visited",
   [StatusId.Lived]: "Lived in",
-  [StatusId.Planned]: "Planned to go",
-  [StatusId.Wishlist]: "Wish to visit",
   [StatusId.Visited]: "Visited",
+  [StatusId.Transited]: "Transited",
 };
 
 export interface Place {
