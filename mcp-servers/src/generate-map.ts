@@ -88,6 +88,10 @@ const html = `<!DOCTYPE html>
   }
   #stats-bar .stat { display: flex; align-items: center; gap: 6px; }
   #stats-bar .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  @media (max-width: 768px) {
+    #stats-bar { font-size: 11px; gap: 8px; padding: 8px 12px; }
+    #stats-bar .dot { width: 8px; height: 8px; }
+  }
   #map-container { display: flex; height: calc(100vh - 44px); }
   #map { flex: 1; }
   #panel {
