@@ -350,7 +350,7 @@
   // ── Load data ──────────────────────────────────────────────────────────────
   let geojson;
   try {
-    const resp = await fetch('./data.json');
+    const resp = await fetch('/swarm/data.json');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     geojson = await resp.json();
   } catch (e) {
