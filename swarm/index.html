@@ -350,12 +350,13 @@
   // ── Load data ──────────────────────────────────────────────────────────────
   let geojson;
   try {
-    const resp = await fetch('data.json');
-    if (!resp.ok) throw new Error(resp.statusText);
+    const resp = await fetch('./data.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     geojson = await resp.json();
   } catch (e) {
-    document.querySelector('#loading p').textContent =
-      'Could not load swarm-data.json — run process-swarm.js first.';
+    const loading = document.getElementById('loading');
+    loading.querySelector('.spinner').style.display = 'none';
+    loading.querySelector('p').textContent = `Failed to load data.json: ${e.message}`;
     return;
   }
 
